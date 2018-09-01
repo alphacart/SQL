@@ -6,7 +6,7 @@ SELECT first_name, last_name FROM actor;
 SELECT CONCAT_WS (' ', first_name, last_name) AS 'Actor Name' FROM actor;
 
 
-#2a. You need to find the ID number, first name, and last name of an actor, of whom you know only the first name, "Joe." 
+#2a. find the ID number, first name, and last name of an actor, of whom you know only the first name, "Joe." 
 #What is one query would you use to obtain this information?
 SELECT actor_id, first_name, last_name FROM actor
 WHERE first_name = "Joe";
@@ -25,14 +25,14 @@ SELECT country_id, country FROM country
 WHERE country IN ('Afghanistan', 'Bangladesh', 'China');
 
 
-#3a. Add a middle_name column to the table actor. Position it between first_name and last_name. Hint: you will need to specify the data type.
+#3a. Add a middle_name column to the table actor. Position it between first_name and last_name. 
 SELECT * FROM actor;
 
 
 ALTER TABLE actor ADD COLUMN middle_name  VARCHAR(50) AFTER first_name;
 
 
-#3b. You realize that some of these actors have tremendously long last names. Change the data type of the middle_name column to blobs.
+#3b. Change the data type of the middle_name column to blobs.
 ALTER TABLE actor 
 MODIFY COLUMN middle_name BLOB;
 
@@ -58,11 +58,11 @@ WHERE first_name='GROUCHO' AND last_name='WILLIAMS';
 SELECT * FROM actor WHERE first_name='HARPO' AND last_name='WILLIAMS';
 
 
-#4d. Perhaps we were too hasty in changing GROUCHO to HARPO. It turns out that GROUCHO was the correct name after all! 
+#4d. Perhaps too hasty in changing GROUCHO to HARPO. It turns out that GROUCHO was the correct name after all! 
 #In a single query, if the first name of the actor is currently HARPO, change it to GROUCHO. 
 #Otherwise, change the first name to MUCHO GROUCHO, as that is exactly what the actor will be with the grievous error. 
-#BE CAREFUL NOT TO CHANGE THE FIRST NAME OF EVERY ACTOR TO MUCHO GROUCHO, 
-#HOWEVER! (Hint: update the record using a unique identifier.)
+
+
 
 SELECT * FROM actor WHERE  last_name='WILLIAMS';
 
@@ -78,7 +78,7 @@ WHERE actor_id =172;
 
 
 
-#5a. You cannot locate the schema of the address table. Which query would you use to re-create it?
+#5a. locate the schema of the address table
 #Hint: https://dev.mysql.com/doc/refman/5.7/en/show-create-table.html
 SHOW CREATE TABLE sakila.address;
 #or
@@ -136,12 +136,12 @@ WHERE actor_id
 	IN (SELECT actor_id FROM film_actor WHERE film_id 
 		IN (SELECT film_id FROM film WHERE title='ALONE TRIP'));
 
-#7c. You want to run an email marketing campaign in Canada, 
-#for which you will need the names and email addresses of all Canadian customers. Use joins to retrieve this information.
+#7c. For an email marketing campaign in Canada, 
+#for which we will need the names and email addresses of all Canadian customers. Use joins to retrieve this information.
 SELECT customer.last_name, customer.first_name, customer.email FROM customer 
 INNER JOIN customer_list ON customer.customer_id = customer_list.ID WHERE customer_list.country = 'Canada';
 
-#7d. Sales have been lagging among young families, and you wish to target all family movies for a promotion. 
+#7d. Sales have been lagging among young families, and  wish to target all family movies for a promotion. 
 #Identify all movies categorized as famiy films.
 SELECT title FROM film WHERE film_id IN (SELECT film_id FROM film_category WHERE category_id IN 
 (SELECT category_id FROM category WHERE name = 'Family'));
@@ -171,8 +171,8 @@ GROUP BY name ORDER BY gross_revenue DESC LIMIT 5;
 
 
 
-#8a. In your new role as an executive, you would like to have an easy way of viewing the Top five genres by gross revenue. 
-#Use the solution from the problem above to create a view. If you haven't solved 7h, you can substitute another query to create a view.
+#8a. Top five genres by gross revenue. 
+#Use the solution from the problem above to create a view. If 7h wasn't solved, then  substitute another query to create a view.
 DROP VIEW IF EXISTS top_five_genres; CREATE VIEW top_five_genres AS
 
 SELECT name, SUM(p.amount) AS gross_revenue FROM category c 
@@ -182,9 +182,9 @@ INNER JOIN rental r ON r.inventory_id = i.inventory_id
 RIGHT JOIN payment p ON p.rental_id = r.rental_id 
 GROUP BY name ORDER BY gross_revenue DESC LIMIT 5;
 
-#8b. How would you display the view that you created in 8a?
+#8b. To  display the view that you created in 8a?
 SELECT * FROM top_five_genres;
 
--- You find that you no longer need the view top_five_genres. Write a query to delete it.
+-- A query to delete it.
 DROP VIEW top_five_genres;
 
